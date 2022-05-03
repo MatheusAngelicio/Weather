@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matheus.weather.data.WeatherData
 import com.matheus.weather.data.WeatherRepository
+import com.matheus.weather.util.API_KEY
 import com.matheus.weather.util.Resource
 import kotlinx.coroutines.launch
 
@@ -17,6 +18,11 @@ class MainViewModel(private val repository: WeatherRepository) : ViewModel() {
     private val _error = MutableLiveData<Boolean>()
     val error: LiveData<Boolean> = _error
 
+    companion object {
+        private val mockLat = "35"
+        private val mockLon = "139"
+    }
+
 
     init {
         loadWeather()
@@ -24,7 +30,7 @@ class MainViewModel(private val repository: WeatherRepository) : ViewModel() {
 
     fun loadWeather() {
         viewModelScope.launch {
-            val result = repository.getWeatherByLatLong()
+            val result = repository.getWeatherByLatLong(mockLat, mockLon, API_KEY)
             when (result) {
                 is Resource.Success -> {
                     _weather.value = result.data

@@ -5,12 +5,10 @@ import java.lang.Exception
 
 class WeatherRepository(private val api: WeatherApi) {
 
-    suspend fun getWeatherByLatLong(): Resource<WeatherData>{
+    suspend fun getWeatherByLatLong(lat: String, lon: String, key: String): Resource<WeatherData> {
         val response = try {
-            api.getWeatherByLatLong()
+            api.getWeatherByLatLong(lat, lon, key)
         } catch (e: Exception) {
-            val x = e
-            val t = e
             return Resource.Error("An unknow error occured : $e")
         }
         return Resource.Success(response)

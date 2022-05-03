@@ -22,16 +22,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        /*viewModel.weather.observe(this) {
-
-        }*/
+        viewModel.weather.observe(this) {
+            Toast.makeText(this, "${it?.name}", Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.error.observe(this) {
-            if (it) Toast.makeText(this, "Deu Erro", Toast.LENGTH_SHORT).show() else Toast.makeText(
+            /*if (it) Toast.makeText(this, "Deu Erro", Toast.LENGTH_SHORT).show() else Toast.makeText(
                 this,
                 "Deu certo",
                 Toast.LENGTH_SHORT
-            ).show()
+            ).show()*/
 
         }
 
