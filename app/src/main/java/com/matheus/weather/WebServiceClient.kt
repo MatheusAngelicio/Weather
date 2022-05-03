@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import kotlin.reflect.jvm.internal.impl.load.java.sources.JavaSourceElementFactory
 
 
 class WebServiceClient {
@@ -23,7 +24,9 @@ class WebServiceClient {
     ): WeatherApi {
         val kotlinJsonAdapter = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
-        return Retrofit.Builder().baseUrl(url).client(OkHttpClient())
+        return Retrofit.Builder()
+            .baseUrl(url)
+            .client(OkHttpClient())
             .addConverterFactory(MoshiConverterFactory.create(kotlinJsonAdapter)).build()
             .create(WeatherApi::class.java)
 
