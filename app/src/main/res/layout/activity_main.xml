@@ -52,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textAllCaps="true"
                 android:textSize="18sp"
                 tools:text="Clear Sky" />
 
@@ -221,7 +222,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -334,8 +335,8 @@
                         android:id="@+id/info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        tools:text="Matheus" />
+                        android:text="Matheus"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -350,11 +351,11 @@
     </RelativeLayout>
 
     <ProgressBar
+        android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/loader"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        tools:visibility="visible"/>
-
+        tools:visibility="visible" />
+    
 </RelativeLayout>

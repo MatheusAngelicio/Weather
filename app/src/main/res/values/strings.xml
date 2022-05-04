@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Weather</string>
+
+    <string name="address">#%s %S</string>
+    <string name="update_at">Updated at: %S</string>
+    <string name="formated_temp">%S °C</string>
+    <string name="formated_temp_min">temp min: %S °C</string>
+    <string name="formated_temp_max">temp max: %S °C</string>
+
 </resources>
