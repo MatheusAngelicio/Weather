@@ -19,8 +19,8 @@ class MainViewModel(private val repository: WeatherRepository) : ViewModel() {
     val error: LiveData<Boolean> = _error
 
     companion object {
-        private val mockLat = "35"
-        private val mockLon = "139"
+        private val mockLat = "-25.438124871326547"
+        private val mockLon = "-49.27197230420212"
     }
 
 
