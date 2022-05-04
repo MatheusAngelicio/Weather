@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             binding.apply {
                 address.text = getString(R.string.address, weather.name, weather.sys?.country ?: "---")
                 updateAt.text = formatUpdateAtText(weather)
-                status.text = weather.weather?.get(0)?.description.toString()
+                if (!weather.weather.isNullOrEmpty()) status.text = weather.weather[0].description.toString()
                 temp.text = getString(R.string.formated_temp, convertFahrenheitToCelcius(weather.main?.temp).substring(0,2))
                 tempMin.text = getString(R.string.formated_temp_min, convertFahrenheitToCelcius(weather.main?.tempMin).substring(0,2))
                 tempMax.text = getString(R.string.formated_temp_max, convertFahrenheitToCelcius(weather.main?.tempMax).substring(0,2))
