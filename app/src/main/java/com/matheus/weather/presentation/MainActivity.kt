@@ -10,14 +10,13 @@ import com.matheus.weather.databinding.ActivityMainBinding
 import com.matheus.weather.util.Location
 import com.matheus.weather.util.convertFahrenheitToCelcius
 import com.matheus.weather.util.formatSunriseSunset
+import com.matheus.weather.util.formatUpdateAtText
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<MainViewModel>()
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.error.observe(this) {
             if (it) showDialogError()
-
         }
-
     }
 
     private fun getLatLon(){
@@ -65,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         weather?.let {
             binding.apply {
                 address.text = getString(R.string.address, weather.name, weather.sys?.country ?: "---")
-                updateAt.text = formatUpdateAtText(weather)
+                updateAt.text = formatUpdateAtText(weather.dt, this@MainActivity)
                 if (!weather.weather.isNullOrEmpty()) status.text = weather.weather[0].description.toString()
                 temp.text = getString(R.string.formated_temp, convertFahrenheitToCelcius(weather.main?.temp).substring(0,2))
                 tempMin.text = getString(R.string.formated_temp_min, convertFahrenheitToCelcius(weather.main?.tempMin).substring(0,2))
@@ -81,20 +78,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun formatUpdateAtText(weather: WeatherData): String {
-        val updatedAtWt = weather.dt
-        updatedAtWt?.let {
-            return getString(
-                R.string.update_at,
-                SimpleDateFormat(
-                    "dd/MM/yyyy hh:mm a",
-                    Locale.ENGLISH
-                ).format(Date(updatedAtWt * 1000))
-            )
-        }
-        return "---"
-    }
-
     private fun showDialogError(){
         AlertDialog.Builder(this)
             .setTitle(R.string.alert_dialog_title_error)
@@ -102,7 +85,5 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.understood) { _, _ -> }
             .show()
     }
-
-
 
 }
