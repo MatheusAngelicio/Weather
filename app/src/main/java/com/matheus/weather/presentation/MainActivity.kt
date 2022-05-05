@@ -2,6 +2,7 @@ package com.matheus.weather.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.matheus.weather.R
 import com.matheus.weather.data.WeatherData
@@ -29,6 +30,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getLatLon()
+    }
+
     private fun observeViewModel() {
         viewModel.weather.observe(this) {
             initViews(it)
@@ -39,11 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.error.observe(this) {
-            /*if (it) Toast.makeText(this, "Deu Erro", Toast.LENGTH_SHORT).show() else Toast.makeText(
-                this,
-                "Deu certo",
-                Toast.LENGTH_SHORT
-            ).show()*/
+            if (it) showDialogError()
 
         }
 
@@ -91,6 +93,14 @@ class MainActivity : AppCompatActivity() {
             )
         }
         return "---"
+    }
+
+    private fun showDialogError(){
+        AlertDialog.Builder(this)
+            .setTitle(R.string.alert_dialog_title_error)
+            .setMessage(R.string.messageToShow)
+            .setPositiveButton(R.string.understood) { _, _ -> }
+            .show()
     }
 
 
