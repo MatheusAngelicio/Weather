@@ -20,31 +20,33 @@ class MainViewModel(private val repository: WeatherRepository) : ViewModel() {
 
     val isLoading = MutableLiveData(false)
 
-    companion object {
-        private val mockLat = "-25.438124871326547"
-        private val mockLon = "-49.27197230420212"
-    }
+    private var lat: String? = null
+    private var lon: String? = null
 
-
-    init {
+    fun setupLatLon(lat: Double, lon: Double) {
+        this.lat = lat.toString()
+        this.lon = lon.toString()
         loadWeather()
     }
 
     fun loadWeather() {
         viewModelScope.launch {
             isLoading.value = true
-            val result = repository.getWeatherByLatLong(mockLat, mockLon, API_KEY)
-            when (result) {
-                is Resource.Success -> {
-                    _weather.value = result.data
-                    isLoading.value = false
-                    _error.value = false
-                }
-                is Resource.Error -> {
-                    _error.value = true
-                    isLoading.value = false
+            if (!lat.isNullOrEmpty() && !lon.isNullOrEmpty()){
+                val result = repository.getWeatherByLatLong(lat!!, lon!!, API_KEY)
+                when (result) {
+                    is Resource.Success -> {
+                        _weather.value = result.data
+                        isLoading.value = false
+                        _error.value = false
+                    }
+                    is Resource.Error -> {
+                        _error.value = true
+                        isLoading.value = false
+                    }
                 }
             }
+
         }
 
 

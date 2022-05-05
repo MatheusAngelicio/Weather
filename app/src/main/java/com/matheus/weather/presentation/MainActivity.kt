@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.matheus.weather.R
-import com.matheus.weather.data.Main
-import com.matheus.weather.data.Sys
 import com.matheus.weather.data.WeatherData
 import com.matheus.weather.databinding.ActivityMainBinding
+import com.matheus.weather.util.Location
 import com.matheus.weather.util.convertFahrenheitToCelcius
 import com.matheus.weather.util.formatSunriseSunset
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getLatLon()
         observeViewModel()
 
     }
@@ -47,6 +47,16 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun getLatLon(){
+        val location = Location(this)
+        location.run {
+            fetchLocation()
+            onAddressListener = {
+                viewModel.setupLatLon(it.first, it.second)
+            }
+        }
     }
 
     private fun initViews(weather: WeatherData?) {
