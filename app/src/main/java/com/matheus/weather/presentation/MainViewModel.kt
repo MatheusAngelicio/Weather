@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matheus.weather.data.WeatherData
-import com.matheus.weather.data.WeatherRepository
+import com.matheus.weather.data.repository.WeatherRepository
 import com.matheus.weather.util.API_KEY
 import com.matheus.weather.util.Resource
 import kotlinx.coroutines.launch
@@ -46,9 +46,6 @@ class MainViewModel(private val repository: WeatherRepository) : ViewModel() {
                     }
                 }
             }
-
         }
-
-
     }
 }

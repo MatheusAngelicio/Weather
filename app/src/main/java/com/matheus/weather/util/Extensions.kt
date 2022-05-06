@@ -3,10 +3,8 @@ package com.matheus.weather.util
 import android.content.Context
 import android.view.View
 import com.matheus.weather.R
-import com.matheus.weather.data.WeatherData
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 fun View.gone() {
     visibility = View.GONE
@@ -16,11 +14,7 @@ fun View.visible() {
     visibility = View.VISIBLE
 }
 
-fun View.invisible() {
-    visibility = View.INVISIBLE
-}
-
-fun formatSunriseSunset(item: Long?): String {
+fun formatNumberToHourMinute(item: Long?): String {
     item?.let {
         return SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(it * 1000))
     }

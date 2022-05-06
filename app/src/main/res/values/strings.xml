@@ -7,7 +7,7 @@
     <string name="formated_temp_min">temp min: %S °C</string>
     <string name="formated_temp_max">temp max: %S °C</string>
 
-
+    <!-- Dialog -->
     <string name="alert_dialog_title_error">Something went wrong</string>
     <string name="understood">Understood</string>
     <string name="messageToShow">We were unable to load the page</string>

@@ -7,10 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.matheus.weather.R
 import com.matheus.weather.data.WeatherData
 import com.matheus.weather.databinding.ActivityMainBinding
-import com.matheus.weather.util.Location
-import com.matheus.weather.util.convertFahrenheitToCelcius
-import com.matheus.weather.util.formatSunriseSunset
-import com.matheus.weather.util.formatUpdateAtText
+import com.matheus.weather.util.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -40,7 +37,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.isLoading.observe(this) {
-            binding.loader.visibility = if (it) View.VISIBLE else View.GONE
+            binding.apply {
+                if (it) loader.visible() else loader.gone()
+            }
         }
 
         viewModel.error.observe(this) {
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLatLon(){
+    private fun getLatLon() {
         val location = Location(this)
         location.run {
             fetchLocation()
@@ -61,14 +60,25 @@ class MainActivity : AppCompatActivity() {
     private fun initViews(weather: WeatherData?) {
         weather?.let {
             binding.apply {
-                address.text = getString(R.string.address, weather.name, weather.sys?.country ?: "---")
+                address.text =
+                    getString(R.string.address, weather.name, weather.sys?.country ?: "---")
                 updateAt.text = formatUpdateAtText(weather.dt, this@MainActivity)
-                if (!weather.weather.isNullOrEmpty()) status.text = weather.weather[0].description.toString()
-                temp.text = getString(R.string.formated_temp, convertFahrenheitToCelcius(weather.main?.temp).substring(0,2))
-                tempMin.text = getString(R.string.formated_temp_min, convertFahrenheitToCelcius(weather.main?.tempMin).substring(0,2))
-                tempMax.text = getString(R.string.formated_temp_max, convertFahrenheitToCelcius(weather.main?.tempMax).substring(0,2))
-                sunrise.text = formatSunriseSunset(weather.sys?.sunrise)
-                sunset.text = formatSunriseSunset(weather.sys?.sunset)
+                if (!weather.weather.isNullOrEmpty()) status.text =
+                    weather.weather[0].description.toString()
+                temp.text = getString(
+                    R.string.formated_temp,
+                    convertFahrenheitToCelcius(weather.main?.temp).substring(0, 2)
+                )
+                tempMin.text = getString(
+                    R.string.formated_temp_min,
+                    convertFahrenheitToCelcius(weather.main?.tempMin).substring(0, 2)
+                )
+                tempMax.text = getString(
+                    R.string.formated_temp_max,
+                    convertFahrenheitToCelcius(weather.main?.tempMax).substring(0, 2)
+                )
+                sunrise.text = formatNumberToHourMinute(weather.sys?.sunrise)
+                sunset.text = formatNumberToHourMinute(weather.sys?.sunset)
                 wind.text = weather.wind?.speed.toString()
                 pressure.text = weather.main?.pressure.toString()
                 humidity.text = weather.main?.humidy.toString()
@@ -78,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showDialogError(){
+    private fun showDialogError() {
         AlertDialog.Builder(this)
             .setTitle(R.string.alert_dialog_title_error)
             .setMessage(R.string.messageToShow)

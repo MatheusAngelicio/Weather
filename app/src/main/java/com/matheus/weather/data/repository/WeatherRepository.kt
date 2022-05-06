@@ -1,5 +1,6 @@
-package com.matheus.weather.data
+package com.matheus.weather.data.repository
 
+import com.matheus.weather.data.WeatherData
 import com.matheus.weather.util.Resource
 
 interface WeatherRepository {
